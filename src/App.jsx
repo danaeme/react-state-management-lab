@@ -109,6 +109,17 @@ const App = () => {
     }
   };
 
+  const handleRemoveFighter = (index) => {
+    const removedFighter = team[index];
+
+    const updatedTeam = team.filter((item, i) => i !== index);
+
+    setTeam(updatedTeam);
+    setMoney(money + removedFighter.price);
+    setTotalStrength(totalStrengthCalculator(updatedTeam));
+    setTotalAgility(totalAgilityCalculator(updatedTeam));
+  }
+
   return (
     <div>
       <h1>The Zombie Fighters</h1>
@@ -128,9 +139,8 @@ const App = () => {
         ))}
       </ul>
       <h2>Your Squad</h2>
-      {team.length === 0 ? (
-        <p>Pick some team members!</p> 
-      ) : ( <ul>
+      {team.length === 0 ? (<p>Pick some team members!</p> ) : ( 
+        <ul>
           {team.map((fighter, index) => (
             <li key={index}>
               <img src={fighter.img} alt={fighter.name} />
@@ -138,7 +148,8 @@ const App = () => {
               <p>Price: ${fighter.price}</p>
               <p>Strength: {fighter.strength}</p>
               <p>Agility: {fighter.agility}</p>
-            </li>
+              <button onClick={() => handleRemoveFighter(index)}>Remove</button> 
+              </li>
           ))}
         </ul>)
       }
