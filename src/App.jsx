@@ -1,10 +1,13 @@
 // src/App.jsx
+
 import {useState} from 'react';
 
 const App = () => {
 
   const [team, setTeam] = useState([]);
   const [money, setMoney] = useState(100);
+  const [totalStrength, setTotalStrength] = useState(0);
+  const [totalAgility, setTotalAgility] = useState(0);
   const [zombieFighters, setZombieFighters] = useState([
     {
       name: 'Survivor',
@@ -78,10 +81,29 @@ const App = () => {
     },
   ]);
 
+  const totalStrengthCalculator = (team) => {
+    let total = 0;
+    for (let i = 0; i < team.length; i++) {
+      total += team[i].strength;
+    }
+    return total;
+  };
+
+  const totalAgilityCalculator = (team) => {
+    let total = 0;
+    for (let i = 0; i < team.length; i++) {
+      total += team[i].agility;
+    }
+    return total;
+  };
+
   const handleAddFighter = (fighter) => {
     if (money >= fighter.price) {
-      setTeam([...team, fighter]); 
+      const myTeam = [...team, fighter];
+      setTeam(myTeam); 
       setMoney(money - fighter.price);
+      setTotalStrength(totalStrengthCalculator(myTeam));
+      setTotalAgility(totalAgilityCalculator(myTeam));
     } else {
       console.log('Not enough money'); 
     }
@@ -91,6 +113,8 @@ const App = () => {
     <div>
       <h1>The Zombie Fighters</h1>
       <p>Money: ${money}</p>
+      <p>Team Strength: {totalStrength}</p>
+      <p>Team Agility: {totalAgility}</p>
       <ul>
       {zombieFighters.map((fighter, index) => (
           <li key={index}>
