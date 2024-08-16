@@ -127,6 +127,7 @@ const App = () => {
       <p>Team Strength: {totalStrength}</p>
       <p>Team Agility: {totalAgility}</p>
       <ul>
+      <div classname = "fighters-grid">
       {zombieFighters.map((fighter, index) => (
           <li key={index}>
             <img src={fighter.img} alt={fighter.name} />
@@ -137,6 +138,7 @@ const App = () => {
             <button onClick={() => handleAddFighter(fighter)}>Add</button>
           </li>
         ))}
+      </div>
       </ul>
       <h2>Your Squad</h2>
       {team.length === 0 ? (<p>Pick some team members!</p> ) : ( 
